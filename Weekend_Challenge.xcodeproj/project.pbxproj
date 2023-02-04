@@ -65,9 +65,9 @@
 			children = (
 				DEE88E43298B10C100119EEE /* Weekend_ChallengeApp.swift */,
 				DEE88E4C298B10C100119EEE /* Persistence.swift */,
-				DEE88E58298B10E000119EEE /* ViewModel */,
-				DEE88E57298B10D900119EEE /* View */,
 				DEE88E56298B10D000119EEE /* Model */,
+				DEE88E57298B10D900119EEE /* View */,
+				DEE88E58298B10E000119EEE /* ViewModel */,
 				DEE88E47298B10C100119EEE /* Assets.xcassets */,
 				DEE88E49298B10C100119EEE /* Preview Content */,
 			);

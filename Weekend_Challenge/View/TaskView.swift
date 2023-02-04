@@ -10,21 +10,25 @@ import SwiftUI
 
 struct TaskView: View {
     
-    @State private var isAddPressed:Bool = false
-
-    @EnvironmentObject var taskModel: TaskViewModel
-
+    
     @Environment(\.managedObjectContext)
-        private var managedObjectContext
-
+    private var managedObjectContext
+    
+    @State private var isAddPressed:Bool = false
+    
+    @EnvironmentObject var taskViewModel: TaskViewModel
+    
     @FetchRequest(entity: Task.entity(),sortDescriptors: [])
-        var task: FetchedResults<Task>
-
+    var task: FetchedResults<Task>
     
     var body: some View {
         NavigationStack{
             List{
-               Text("Hello")
+                ForEach(taskViewModel.taskList){ taskIndex in
+                    Text(taskIndex.taskName ?? "")
+                }.onDelete{ offsets in
+                    self.taskViewModel.deleteTask(offsets: offsets)
+                }
             }
             .navigationTitle("Today's Task")
             .toolbar{
@@ -36,15 +40,7 @@ struct TaskView: View {
                             .foregroundColor(.blue)
                             .font(.system(size: 24, weight: .bold))
                     }.sheet(isPresented: $isAddPressed){
-                        NavigationStack {
-                            TaskInsertionView().navigationTitle("Add a new task")
-                        }.toolbar{
-                            ToolbarItem(placement: .navigationBarTrailing){
-                                Button("Done"){
-                                    print("Done")
-                                }
-                            }
-                        }
+                        TaskInsertionView()
                     }
                 }
             }
@@ -52,8 +48,10 @@ struct TaskView: View {
     }
 }
 
-struct TaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskView()
+    
+    struct TaskView_Previews: PreviewProvider {
+        static var previews: some View {
+            TaskView().environmentObject(TaskViewModel())
+        }
     }
-}
+
